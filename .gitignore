@@ -1,0 +1,11 @@
+*.DS_Store
+target
+.classpath
+.project
+.settings
+.idea
+*.iml
+rebel.xml
+derby.log
+atlassian-ide-plugin.xml
+build.bat

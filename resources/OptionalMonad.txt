@@ -1,0 +1,10 @@
+http://blog.sigfpe.com/2006/08/you-could-have-invented-monads-and.html
+What is a monad? The short answer: It's a specific way of chaining operations together.
+In essence, you're writing execution steps and linking them together with the "bind function".
+You can write the calls to the bind operator yourself, or you can use syntax sugar which makes the compiler insert those function calls for you. But either way, each step is separated by a call to this bind function.
+The bind function's job is to take the output from the previous step, and feed it into the next step.
+Basically, each monad has its own implementation of the bind function.
+
+
+
+The Optional monad is meant to allow composing functions that may or may not return a value, when the absence of value is not an error

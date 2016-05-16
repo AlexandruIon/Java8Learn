@@ -129,6 +129,27 @@ public class Chapter6CollectiongDataWithStreams {
 
 		System.out.println("Group by caloric level" + dishesByCaloricLevel);
 
+		Map<Dish.Type, Map<CaloricLevel, List<Dish>>> typeMapMap = menu.stream().collect(Collectors.groupingBy(Dish::getType,
+				(Collectors.groupingBy((d) -> {
+					if (d.getCalories() <= 400) {
+						return CaloricLevel.DIET;
+					} else if (d.getCalories() <= 700) {
+						return CaloricLevel.NORMAL;
+					} else return CaloricLevel.FAT;
+				}))));
+		System.out.println("Group by type and caloric level" + typeMapMap);
+
+
+		Map<Dish.Type, Long> countingDishTypes = menu.stream().collect(Collectors.groupingBy(Dish::getType, Collectors.counting()));
+		System.out.println("Group by type and get number" + countingDishTypes);
+		Map<Dish.Type, Optional<Dish>> collectByTypeAndMax = menu.stream().collect(Collectors.groupingBy(Dish::getType, Collectors.maxBy(Comparator.comparingInt(Dish::getCalories))));
+		System.out.println("Group by type and max" + collectByTypeAndMax);
+		Map<Dish.Type, Optional<Dish>> collectByTypeAndMin = menu.stream().collect(Collectors.groupingBy(Dish::getType, Collectors.minBy(Comparator.comparingInt(Dish::getCalories))));
+		System.out.println("Group by type and min" + collectByTypeAndMin);
+		Map<Dish.Type, List<Dish>> collectByTypeAndList = menu.stream().collect(Collectors.groupingBy(Dish::getType, Collectors.toList()));
+		System.out.println("Group by type and list" + collectByTypeAndList);
+
+
 	}
 
 	public enum CaloricLevel {DIET, NORMAL, FAT}

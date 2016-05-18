@@ -1,12 +1,14 @@
-package asd;
+package chapter6;
 
+
+import asd.Dish;
 
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class Chapter6CollectiongDataWithStreams {
+public class CollectiongDataWithStreams {
 
     public static void main(String[] args) {
 

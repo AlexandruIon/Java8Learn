@@ -7,3 +7,39 @@ therefore there can be at most two different groups—one for true and one for f
 6.5. The Collector interface
 The Collector interface consists of a set of methods that provide a blueprint for how to
 implement specific reduction operations (that is, collectors).
+
+public interface Collector<T, A, R> {
+	Supplier<A> supplier();
+	BiConsumer<A, T> accumulator();
+	Function<A, R> finisher();
+	BinaryOperator<A> combiner();
+	Set<Characteristics> characteristics();
+}
+
+ T is the generic type of the items in the stream to be collected.
+ A is the type of the accumulator, the object on which the partial result will be accumulated during the
+collection process.
+ R is the type of the object (typically, but not always, the collection) resulting from the collect
+operation
+
+		Making a new result container: the supplier method
+			The supplier method has to return a Supplier of an empty result—a parameterless function that
+			when invoked creates an instance of an empty accumulator used during the collection process.
+			public Supplier<List<T>> supplier() {
+				return ArrayList::new;
+			}
+		Adding an element to a result container: the accumulator method
+			The accumulator method returns the function that performs the reduction operation. When
+			traversing the nth element in the stream, this function is applied with two arguments, the
+			accumulator being the result of the reduction (after having collected the first n–1 items of the
+			stream) and the nth element itself. The function returns void because the accumulator is
+			modified in place, meaning that its internal state is changed by the function application to
+			reflect the effect of the traversed element
+		Applying the final transformation to the result container: the finisher method
+			The finisher method has to return a function that’s invoked at the end of the accumulation
+            process, after having completely traversed the stream, in order to transform the accumulator
+            object into the final result of the whole collection operation.
+		Merging two result containers: the combiner method
+            The combiner method, the last of the four methods that return a function used by the reduction
+            operation, defines how the accumulators resulting from the reduction of different subparts of
+            the stream are combined when the subparts are processed in parallel.

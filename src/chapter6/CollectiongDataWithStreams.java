@@ -251,7 +251,8 @@ public class CollectiongDataWithStreams {
                         Dish::isVegetarian, Collectors.partitioningBy(d -> d.getCalories() > 500)));
         System.out.println("Partitioning by is vegetarian and partition calories" + partitionCaloriesAbove500);
 
-        System.out.println("6.4.2 Partitioning numbers into prime and nonprime");
+        List<Dish> dishes = menu.stream().collect(new ToListCollector<>());
+        List<Dish> dishes2 = menu.stream().collect(ArrayList::new, List::add, List::addAll);
 
     }
 

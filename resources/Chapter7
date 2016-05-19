@@ -1,0 +1,8 @@
+Chapter 7. Parallel data processing and performance
+
+7.1 Parallel streams
+
+A parallel stream is a stream that splits its elements into multiple chunks, processing each chunk with a different thread.
+But the last call to parallel or sequential wins and affects the pipeline globally.
+the whole list of numbers isn’t available at the beginning of the reduction process, making it
+impossible to efficiently partition the stream in chunks to be processed in parallel

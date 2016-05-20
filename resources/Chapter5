@@ -1,0 +1,10 @@
+Chapter 5 Steams -2
+
+Streams from function : creating infinite streams
+
+The Streams API provides two static methods to generate a stream from a function:
+Stream.iterate and Stream.generate. These two operations let you create what we call an infinite
+stream: a stream that doesn’t have a fixed size like when you create a stream from a fixed
+collection. Streams produced by iterate and generate create values on demand given a function
+and can therefore calculate values forever! It’s generally sensible to use limit(n) on such streams
+to avoid printing an infinite number of values

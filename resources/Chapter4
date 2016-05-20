@@ -1,0 +1,29 @@
+Chapter 4 Streams
+
+To summarize, the Streams API in Java 8 lets you write code that’s
+ Declarative— More concise and readable
+ Composable— Greater flexibility
+ Parallelizable— Better performance
+
+So first, what exactly is a stream? A short definition is “a sequence of elements from a source
+that supports data processing operations.”
+
+Sequence of elements— Like a collection, a stream provides an interface to a sequenced set of
+values of a specific element type. Because collections are data structures, they’re mostly about storing
+and accessing elements with specific time/space complexities (for example, an ArrayList vs. a
+LinkedList). But streams are about expressing computations such as filter, sorted, and map that
+you saw earlier. Collections are about data; streams are about computations. We explain this idea in
+greater detail in the coming sections
+
+Streams vs collection
+Both the existing Java notion of collections and the new notion of streams provide interfaces to
+data structures representing a sequenced set of values of the element type. By sequenced, we
+mean that we commonly step through the values in turn rather than randomly accessing them in
+any order
+
+In coarsest terms, the difference between collections and streams has to do with when things are
+computed. A collection is an in-memory data structure that holds all the values the data
+structure currently has—every element in the collection has to be computed before it can be
+added to the collection. (You can add things to, and remove them from, the collection, but at
+each moment in time, every element in the collection is stored in memory; elements have to be
+computed before becoming part of the collection.)

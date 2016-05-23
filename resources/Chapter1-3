@@ -10,7 +10,7 @@ Streams
 	Indeed, although the primary meaning of
 	functional in functional programming means “using functions as first class values,” it often has
 	a secondary nuance of “no interaction during execution between components.”
-	
+
 Default methods
 
 	They’re important
@@ -18,8 +18,8 @@ Default methods
 	programmers will need to write default methods themselves and because they facilitate program
 	evolution rather than helping write any particular program, we keep the explanation here short
 	and example-based:
-	
-	
+
+
 Chapter 2
 
 	Behavior parameterization is a software development pattern that lets you handle frequent
@@ -92,7 +92,7 @@ variables. Lambdas are allowed to capture (that is, to reference in their bodies
 variables and static variables without restrictions. But local variables have to be explicitly
 81
 declared final or are effectively final. In other words, lambda expressions can capture local
-variables that are assigned to them only once. 
+variables that are assigned to them only once.
 
 
 Chapter 4

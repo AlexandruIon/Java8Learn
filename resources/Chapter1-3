@@ -1,0 +1,135 @@
+Chapter 1
+
+Streams
+	But it’s useful for now to keep
+	in mind that Collections is mostly about storing and accessing data, whereas Streams is mostly
+	about describing computations on data.
+	The key point here is that Streams allows and
+	encourages the elements within a Stream to be processed in parallel.
+
+	Indeed, although the primary meaning of
+	functional in functional programming means “using functions as first class values,” it often has
+	a secondary nuance of “no interaction during execution between components.”
+
+Default methods
+
+	They’re important
+	because you’ll increasingly encounter them in interfaces, but because relatively few
+	programmers will need to write default methods themselves and because they facilitate program
+	evolution rather than helping write any particular program, we keep the explanation here short
+	and example-based:
+
+
+Chapter 2
+
+	Behavior parameterization is a software development pattern that lets you handle frequent
+requirement changes. In a nutshell, it means taking a block of code and making it available
+without executing it. This block of code can be called later by other parts of your programs,
+which means that you can defer the execution of that block of code. For instance, you could pass
+the block of code as an argument to another method that will execute it later. As a result, the
+method’s behavior is parameterized based on that block of code.
+
+	Java has a mechanism called anonymous
+classes, which let you declare and instantiate a class at the same time.
+	Anonymous classes are like the local classes (a class defined in a block) that you’re already
+familiar with in Java. But anonymous classes don’t have a name. They allow you to declare and
+instantiate a class at the same time. In other words, they allow you to create ad hoc
+implementations.
+
+Chapter 3
+
+Lambdas
+
+A lambda expression can be understood as a concise representation of an anonymous function
+that can be passed around: it doesn’t have a name, but it has a list of parameters, a body, a
+return type, and also possibly a list of exceptions that can be thrown.
+
+ Anonymous— We say anonymous because it doesn’t have an explicit name like a method would
+normally have: less to write and think about!
+ Function— We say function because a lambda isn’t associated with a particular class like a method is.
+But like a method, a lambda has a list of parameters, a body, a return type, and a possible list of
+exceptions that can be thrown.
+ Passed around— A lambda expression can be passed as argument to a method or stored in a
+variable.
+ Concise— You don’t need to write a lot of boilerplate like you do for anonymous classes.
+
+So where exactly can you use lambdas? You can use a lambda expression in the context of a
+functional interface.
+In a nutshell, a functional interface is an interface that specifies exactly one abstract method.
+An interface is still a functional interface if it has many default methods as long as it
+specifies only one abstract method.
+
+What can you do with functional interfaces? Lambda expressions let you provide the
+implementation of the abstract method of a functional interface directly inline and treat the
+whole expression as an instance of a functional interface (more technically speaking, an
+instance of a concrete implementation of the functional interface).
+
+The signature of the abstract method of the functional interface essentially describes the
+signature of the lambda expression. We call this abstract method a function descriptor.
+
+We use a special notation throughout the chapter to describe the signatures of lambdas and
+functional interfaces. The notation () -> void represents a function with an empty list of
+parameters returning void. This is exactly what the Runnable interface represents. As another
+example, (Apple, Apple) -> int denotes a function taking two Apples as parameters and
+returning an int.
+
+For now, it suffices
+to understand that a lambda expression can be assigned to a variable or passed to a method
+expecting a functional interface as argument, provided the lambda expression has the same
+signature as the abstract method of the functional interface.
+
+Remember, lambda expressions let you provide the implementation of the abstract
+method of a functional interface directly inline, and they treat the whole expression as an
+instance of a functional interface.
+
+All the lambda expressions we’ve shown so far used only their arguments inside their body. But
+lambda expressions are also allowed to use free variables (variables that aren’t the parameters
+and defined in an outer scope) just like anonymous classes can. They’re called capturing
+lambdas.
+
+Nonetheless, there’s a small twist: there are some restrictions on what you can do with these
+variables. Lambdas are allowed to capture (that is, to reference in their bodies) instance
+variables and static variables without restrictions. But local variables have to be explicitly
+81
+declared final or are effectively final. In other words, lambda expressions can capture local
+variables that are assigned to them only once.
+
+
+Chapter 4
+
+Stream operations that can be connected are called intermediate operations, and operations
+that close a stream are called terminal operations.
+Intermediate operations such as filter or sorted return another stream as the return type. This
+allows the operations to be connected to form a query. What’s important is that intermediate
+operations don’t perform any processing until a terminal operation is invoked on the stream
+pipeline—they’re lazy. This is because intermediate operations can usually be merged and
+processed into a single pass by the terminal operation.
+
+
+Chapter5
+
+
+Chapter 6
+
+In this chapter, you’ll discover that collect is a reduction operation, just like reduce, that takes as argument various
+recipes for accumulating the elements of a stream into a summary result.
+Collectors as advanced reductions
+ore specifically, invoking the collect method on a stream triggers a reduction
+operation (parameterized by a Collector) on the elements of the stream itself.
+The implementation of the methods of the Collector interface defines how to perform a
+reduction operation on a stream.
+Predefined collectors from Collectors class.
+These offer three main functionalities:
+ Reducing and summarizing stream elements to a single value
+ Grouping elements
+ Partitioning elements
+1. reducing and summarizing
+	Collectors (the parameters to the Stream method collect) are typically used
+	in cases where it’s necessary to reorganize the stream’s items into a collection. But more
+	generally, they can be used every time you want to combine all the items in the stream into a
+	single result.
+
+	All the collectors we’ve discussed so far are, in reality, only convenient specializations of a
+	reduction process that can be defined using the reducing factory method. The
+	Collectors.reducing factory method is a generalization of all of them. The special cases discussed
+	earlier are arguably provided only for programmer convenience.

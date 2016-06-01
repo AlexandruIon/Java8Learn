@@ -1,0 +1,88 @@
+Chapter 8. Refactoring, testing, and debugging
+
+8.1.2. From anonymous classes to lambda expressions
+But converting anonymous classes to lambda expressions can be a difficult process in certain
+situations.[1] First, the meanings of this and super are different for anonymous classes and
+lambda expressions. Inside an anonymous class, this refers to the anonymous class itself, but
+inside a lambda it refers to the enclosing class. Second, anonymous classes are allowed to
+shadow variables from the enclosing class. Lambda expressions can’t (they’ll cause a compile
+error), as shown in the following code:
+
+Finally, converting an anonymous class to a lambda expression can make the resulting code
+ambiguous in the context of overloading. Indeed, the type of anonymous class is explicit at
+instantiation, but the type of the lambda depends on its context.
+
+8.1.5. Improving code flexibility
+Adopting functional interfaces
+First, you can’t use lambda expressions without functional interfaces. You should therefore start
+introducing them in your codebase. That sounds good, but in which situations? We discuss two
+common code patterns that can be refactored to leverage lambda expressions: conditional
+deferred execution and execute around. In addition, in the next section we show how many
+object-oriented design patterns such as strategy and template method can be rewritten more
+concisely using lambda expressions.
+
+Conditional deferred execution
+logger.log(Level.FINER, "Problem: " + generateDiagnostic()); vs
+public void log(Level level, Supplier<String> msgSupplier) => logger.log(Level.FINER, () -> "Problem: " + generateDiagnostic());
+
+If you see yourself querying the state of an object many
+times in client code (for example, the state of the logger), only to call some method on this object
+with arguments (for example, log a message), then consider introducing a new method that calls
+that method (passed as a lambda or method reference) only after internally checking the state of
+the object. Your code will be more readable (less clutter) and better encapsulated (the state of
+the object isn’t exposed in client code)!
+
+Execute around
+If you find
+yourself surrounding different code with the same preparation and cleanup phases, you can
+often pull that code into a lambda. The benefit is that you reuse the logic dealing with the
+preparation and cleanup phases, thus reducing code duplication.
+
+8.2. Refactoring object-oriented design patterns with lambdas
+the visitor design pattern is a common solution for
+separating an algorithm from a structure on which it needs to operate. The singleton pattern is a
+common solution to restrict the instantiation of a class to only one object.
+
+Many existing object-oriented design patterns can be made
+redundant or written in a more concise way using lambda expressions. In this section, we
+explore five design patterns:
+ Strategy
+ Template method
+ Observer
+ Chain of responsibility
+ Factory
+
+8.2.1. Strategy
+
+The strategy pattern is a common solution for representing a family of algorithms and letting
+you choose among them at runtime.
+
+8.2.2. Template method
+
+The template method design pattern is a common solution when you need to represent the
+outline of an algorithm and have the additional flexibility to change certain parts of it. Okay, it
+sounds a bit abstract. In other words, the template method pattern is useful when you find
+yourself in a situation such as “I’d love to use this algorithm but I need to change a few lines so it
+does what I want.”
+
+In Template pattern, an abstract class exposes defined way(s)/template(s) to execute its methods.
+Its subclasses can override the method implementation as per need but the invocation is to be in the
+same way as defined by an abstract class.
+
+
+8.2.3. Observer pattern
+Observer pattern is used when there is one-to-many relationship between objects such as if one object is modified,
+ its depenedent objects are to be notified automatically. Observer pattern falls under behavioral pattern category.
+Observer pattern uses three actor classes. Subject, Observer and Client. Subject is an object having methods to attach
+ and detach observers to a client object. We have created an abstract class Observer and a concrete class Subject that is extending class Observer.
+
+ The observer design pattern is a common solution when an object (called the subject) needs to
+ automatically notify a list of other objects (called observers) when some event happens (for
+ example, a state change). You typically come across this pattern when working with GUI
+ applications.
+
+ 8.2.4. Chain of responsibility
+ As the name suggests, the chain of responsibility pattern creates a chain of receiver objects for a request.
+ This pattern decouples sender and receiver of a request based on type of request. This pattern comes under behavioral patterns.
+ In this pattern, normally each receiver contains reference to another receiver. If one object cannot handle the request then it passes
+  the same to the next receiver and so on.

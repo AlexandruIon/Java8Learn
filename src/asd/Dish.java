@@ -1,6 +1,9 @@
 package asd;
 
 
+import chapter6.CollectiongDataWithStreams;
+import chapter6.CollectiongDataWithStreams.CaloricLevel;
+
 public class Dish {
 	private final String name;
 	private final boolean vegetarian;
@@ -28,6 +31,14 @@ public class Dish {
 
 	public Type getType() {
 		return type;
+	}
+
+	public CaloricLevel getCaloricLevel() {
+		if (this.getCalories() <= 400) {
+			return CollectiongDataWithStreams.CaloricLevel.DIET;
+		} else if (this.getCalories() <= 700) {
+			return CollectiongDataWithStreams.CaloricLevel.NORMAL;
+		} else return CollectiongDataWithStreams.CaloricLevel.FAT;
 	}
 
 	@Override

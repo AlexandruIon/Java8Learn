@@ -1,0 +1,88 @@
+Interfaces in Java 8 can now declare methods with implementation code; this
+can happen in two ways. First, Java 8 allows static methods inside interfaces. Second, Java 8
+introduces a new feature called default methods that allows you to provide a default
+implementation for methods in an interface.
+
+The main users of default methods are library designers. As we explain later, default
+methods were introduced to evolve libraries such as the Java API in a compatible way,
+
+This is the motivation for default methods: they let classes automatically
+inherit a default implementation from an interface.
+
+Default methods can help structure your programs by providing
+a flexible mechanism for multiple inheritance of behavior: a class can inherit default methods
+from several interfaces.
+
+Static methods and interfaces
+A common pattern in Java is to define both an interface and a utility companion class defining
+many static methods for working with instances of the interface. For example, Collections is a
+companion class to deal with Collection objects. Now that static methods can exist inside
+interfaces, such utility classes in your code can go away and their static methods can be moved
+inside an interface. These companion classes will remain in the Java API in order to preserve
+backward compatibility.
+
+
+Abstract classes vs. interfaces in Java 8
+So what’s the difference between an abstract class and an interface? They both can contain
+abstract methods and methods with a body.
+First, a class can extend only from one abstract class, but a class can implement multiple
+interfaces.
+Second, an abstract class can enforce a common state through instance variables (fields). An
+interface can’t have instance variables.
+
+Usage patterns for default methods
+You’ve seen how default methods can be useful to evolve a library in a compatible way. Is there
+anything else you can do with them? You can create your own interfaces that have default
+methods too. You may want to do this for two use cases that we explore in this section: optional
+methods and multiple inheritance of behavior.
+
+optional:
+It’s likely you’ve come across classes that implement an interface but leave empty some method
+implementations. Take, for example, the Iterator interface. It defines hasNext and next but also
+the remove method. Prior to Java 8, remove was often ignored because the user decided not to
+use that capability. As a result, many classes implementing Iterator have an empty
+implementation for remove, which results in unnecessary boilerplate code.
+
+Multiple inheritance of behavior
+Default methods enable something that wasn’t possible in an elegant way before: multiple
+inheritance of behavior.
+
+
+With the introduction of default methods in Java 8, there’s the possibility of a class inheriting
+more than one method with the same signature.
+
+
+
+Three resolution rules to know
+There are three rules to follow when a class inherits a method with the same signature from
+multiple places (such as another class or interface):
+1. Classes always win. A method declaration in the class or a superclass takes priority over any
+default method declaration.
+278
+2. Otherwise, sub-interfaces win: the method with the same signature in the most specific
+default-providing interface is selected. (If B extends A, B is more specific than A).
+3. Finally, if the choice is still ambiguous, the class inheriting from multiple interfaces has to
+explicitly select which default method implementation to use by overriding it and calling the
+desired method explicitly.
+
+Resolving the conflict
+There aren’t many solutions to resolve the conflict between the two possible valid methods; you
+have to explicitly decide which method declaration you want C to use. To do this, you can
+override the hello method in class C and then in its body explicitly call the method you wish to
+use. Java 8 introduces the new syntax X.super.m(...) where X is the superinterface whose
+method m you want to call. For example, if you want C to use the default method from B, it looks
+like this:
+
+public class C implements A,B{
+    public void hello(){
+    B.super().hello();
+    }
+}
+
+There are resolution rules to resolve conflicts when a class inherits from several default methods with
+the same signature.
+ A method declaration in the class or a superclass takes priority over any default method declaration.
+Otherwise, the method with the same signature in the most specific default-providing interface is
+selected.
+ When two methods are equally specific, a class can explicitly override a method and select which one
+to call.

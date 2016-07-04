@@ -1,0 +1,6 @@
+Using null to represent the absence of a value is the wrong
+approach. What you need is a better way to model the absence and presence of a value.
+
+the first temptation of all Java developers when
+confronted with a NullPointerException is to quickly fix it by adding an if statement, checking
+that a value is not null before invoking a method on it.
